@@ -100,6 +100,15 @@ spec:
             cpu: 10m
             memory: 300Mi
         terminationMessagePolicy: FallbackToLogsOnError
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/bash
+              - -c
+              - |
+                set -xe
+                OVN_MANAGE_OVSDB=no /usr/share/ovn/scripts/ovn-ctl stop_northd
 
       # nbdb: the northbound, or logical network object DB. In raft mode 
       - name: nbdb
